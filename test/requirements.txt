@@ -1,7 +1,9 @@
 Flask
 Flask-SocketIO
 python-socketio
-opencv-python-headless  # OpenCV (顔認識用)
-face_recognition        # 顔認識ライブラリ
-Pillow                  # 画像処理
-numpy                   # 数値計算
+opencv-python-headless  # OpenCV (サーバーで顔認識を行うため)
+face_recognition
+Pillow
+numpy
+gunicorn                # Procfileでサーバーを起動するために必須
+eventlet                # SocketIOのWebSocketを扱うために必須
