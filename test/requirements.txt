@@ -1,0 +1,7 @@
+Flask
+Flask-SocketIO
+python-socketio
+opencv-python-headless  # OpenCV (顔認識用)
+face_recognition        # 顔認識ライブラリ
+Pillow                  # 画像処理
+numpy                   # 数値計算

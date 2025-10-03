@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Web音声/顔認識システム</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .section { margin-bottom: 40px; border-bottom: 1px solid #ccc; padding-bottom: 20px; }
+        textarea { width: 100%; min-height: 100px; padding: 10px; box-sizing: border-box; }
+        button { padding: 10px 20px; cursor: pointer; }
+        #camera-feed { width: 100%; max-width: 400px; height: auto; border: 1px solid black; }
+        .danger-alert { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background-color: #ff4d4d; 
+            color: white; 
+            padding: 15px; 
+            border-radius: 5px;
+            font-weight: bold;
+            z-index: 1000;
+            display: none; /* 初期は非表示 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎙️ 日本語音声認識 & テキスト化</h1>
+
+        <div class="section">
+            <button id="start-stt">マイクをオンにして読み上げを開始</button>
+            <button id="copy-text">テキストをコピー</button>
+            <p id="stt-status">待機中...</p>
+            <textarea id="text-output" placeholder="読み上げられたテキストがここに入ります"></textarea>
+        </div>
+
+        <hr>
+
+        <h1>👀 隠し機能: 危険人物の特定と通知</h1>
+
+        <div class="section">
+            <h2>1. Webカメラ起動</h2>
+            <button id="start-camera">Webカメラ起動 / 監視開始</button>
+            <video id="camera-feed" autoplay></video>
+            <canvas id="camera-canvas" style="display:none;"></canvas>
+            <div id="camera-status">カメラはオフです。</div>
+        </div>
+
+        <div class="section">
+            <h2>2. 特定人物の登録 (最大10名)</h2>
+            <form id="add-face-form">
+                <input type="text" id="person-name" placeholder="人物名" required>
+                <input type="file" id="photo-file" accept="image/*" multiple required>
+                <button type="submit">特徴量を学習・登録</button>
+            </form>
+            <h3>登録済み人物</h3>
+            <ul id="known-faces-list">
+                </ul>
+        </div>
+    </div>
+
+    <div id="danger-alert" class="danger-alert"></div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
